@@ -153,6 +153,15 @@ static void exec(char *cmdline) {
         ind = 0;
       }
       String word = cmdline;
+      display1.setTextSize(1);
+      display1.setTextColor(SSD1306_BLACK);
+      display1.setCursor(0, 77 + (ind * 10));
+      display1.print(outputStrings[ind]);
+
+      display2.setTextSize(1);
+      display2.setTextColor(SSD1306_BLACK);
+      display2.setCursor(0, 77 + (ind * 10));
+      display2.print(outputStrings[ind]);
       outputStrings[ind] = word;
   } else {
     Serial.print(F("Error: Unknown command: "));
