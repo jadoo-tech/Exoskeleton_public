@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "teensy ADc",
+			"path": "Arduino for teensy /teensy ADc"
+		}
+	],
+	"settings": {}
+}
