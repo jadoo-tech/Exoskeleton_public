@@ -2,6 +2,12 @@ from flask import Flask, jsonify, render_template, request
 import csv
 from werkzeug.middleware.proxy_fix import ProxyFix
 
+#### DISPLAY ####
+import cv2
+import numpy as np
+##################
+
+
 ### CIENT PI COMMUNICATION ###
 import threading
 import subprocess
@@ -16,33 +22,32 @@ app = Flask(__name__, template_folder = '../html', static_folder='../static')
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1) 
 
 ### CIENT PI COMMUNICATION ###
-clients = {}
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind((constants.HOST, constants.PORTOUT))
+clients_exec = {}
+videoThreads = {}
+sock_exec = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock_exec.bind((constants.HOST, constants.PORTOUT))
+
 #def runRecv(cId):
 #	subprocess.run(['python3', 'recvFile.py', str(cId)])
-def initialize_Connection(cId):
-    sock.listen()
+
+def initialize_Connection_Exec(cId):
+    sock_exec.listen()
     print(f'Initiating port from new client')
     try:
-        clients.update({cId:sock.accept()})
+        clients_exec.update({cId:sock_exec.accept()})
         print(f'Connected with client for recieving data')
     except Exception as e:
         print(e)
 
-def sendCommand(command, cId):
-    conn = clients.get(cId) 
-    if (not conn):
-        print("Initializing")
-        initialize_Connection(cId)
-        conn = clients.get(cId)
-    if (command != 'stop sending'):
-        print(f"Sending {command} to {cId}")
-        conn[0].send(command.encode())
-    else:
-        conn[0].send(str(constants.ENDWORD).encode())
-        conn[0].close()
-        clients.pop(cId)
+def initialize_Connection_Video(cId):
+    sock_video.listen()
+    print(f'Initiating port from new client')
+    try:
+        clients_video.update({cId:sock_exec.accept()})
+        print(f'Connected with client for recieving data')
+    except Exception as e:
+        print(e)
+
 ###############################
 
 def read_csv():
@@ -53,6 +58,23 @@ def read_csv():
             data.append(row)
     return data
 
+def displayVideo(vId):
+    subprocess.run(['python3', 'videoDisplay.py', str(vId)])
+
+def sendCommand(command, cId):
+    conn = clients_exec.get(cId) 
+    if (not conn):
+        print("Initializing")
+        initialize_Connection_Exec(cId)
+        conn = clients_exec.get(cId)
+    if (command != 'stop sending'):
+        print(f"Sending {command} to {cId}")
+        conn[0].send(command.encode())
+    else:
+        conn[0].send(str(constants.ENDWORD).encode())
+        conn[0].close()
+        clients_exec.pop(cId)
+
 @app.route('/commandClient', methods=['POST'])
 def commandClient():
     try:
@@ -60,6 +82,9 @@ def commandClient():
         print(msg, "command recieved")
         command = msg[0]
         cId = msg[1]
+        if (command == 'camera'):
+            displayVideo(cId)
+            return f"Command: '{command}' sent to client {cId}."
         if (cId):
             sendCommand(command, cId)
             return f"Command: '{command}' sent to client {cId}."
