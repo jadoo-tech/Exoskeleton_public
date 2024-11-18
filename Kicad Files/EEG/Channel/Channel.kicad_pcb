@@ -74,9 +74,9 @@
 			(subtractmaskfromsilk no)
 			(outputformat 1)
 			(mirror no)
-			(drillshape 1)
+			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "")
+			(outputdirectory "../Gerber_channel")
 		)
 	)
 	(net 0 "")
@@ -6668,9 +6668,9 @@
 	(footprint "logo:logo_Horizontal_small"
 		(layer "B.Cu")
 		(uuid "11a84f31-c6e0-4dcc-9d7f-92f5bb425a7d")
-		(at 93.98 77.47)
+		(at 95.55 78.04)
 		(property "Reference" "G***"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "dcedd52a-a9ff-4db6-95af-476792333ba4")
@@ -6683,7 +6683,7 @@
 			)
 		)
 		(property "Value" "LOGO"
-			(at 0.75 0 360)
+			(at 0.75 0 0)
 			(layer "B.SilkS")
 			(hide yes)
 			(uuid "29d2aadd-ea0f-4aac-a462-5def3691ff15")
@@ -6696,7 +6696,7 @@
 			)
 		)
 		(property "Footprint" "logo:logo_Horizontal_small"
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "8972add8-3e7d-4712-bc12-fd6341830f4e")
@@ -6709,7 +6709,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "919e2463-2dbc-4a2a-b093-d20afd5c2baf")
@@ -6722,7 +6722,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 0 0 360)
+			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
 			(uuid "b86825ff-6002-47e8-9644-46cb5e257323")
