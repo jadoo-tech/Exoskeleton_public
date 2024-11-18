@@ -36071,7 +36071,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "EEG Project:Teensy41"
+		(property "Footprint" "Teensy 4.1:Teensy41"
 			(at 170.18 279.4 0)
 			(effects
 				(font
