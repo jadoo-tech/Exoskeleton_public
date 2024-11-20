@@ -3563,8 +3563,8 @@
 			)
 		)
 		(property "Value" "Camera"
-			(at 0 20.11 0)
-			(layer "F.Fab")
+			(at 0.65 20.11 0)
+			(layer "F.SilkS")
 			(uuid "2a864ceb-ee8e-410a-8dc8-17df2cb2c58c")
 			(effects
 				(font
