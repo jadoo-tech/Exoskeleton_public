@@ -12,19 +12,21 @@
     (property "Datasheet" "" (at -3.81 2.54 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (symbol "Camera_1_1"
+    (symbol "Camera_0_0"
       (text_box ""
         (at -7.62 10.16 0) (size 15.24 -19.05)
         (stroke (width 0) (type default))
         (fill (type none))
         (effects (font (size 1.27 1.27)) (justify left top))
       )
+    )
+    (symbol "Camera_1_1"
       (pin input line (at -10.16 7.62 0) (length 2.54)
         (name "VCC" (effects (font (size 1.27 1.27))))
         (number "1" (effects (font (size 1.27 1.27))))
       )
       (pin input line (at 10.16 -7.62 180) (length 2.54)
-        (name "SDL" (effects (font (size 1.27 1.27))))
+        (name "SCL" (effects (font (size 1.27 1.27))))
         (number "2" (effects (font (size 1.27 1.27))))
       )
       (pin input line (at 10.16 -2.54 180) (length 2.54)
@@ -53,11 +55,11 @@
       )
     )
   )
-  (symbol "OLD Driver" (in_bom yes) (on_board yes)
+  (symbol "OLED Driver" (in_bom yes) (on_board yes)
     (property "Reference" "U" (at 0 11.43 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "OLD Driver" (at 0 -10.16 0)
+    (property "Value" "OLED Driver" (at 0 -10.16 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "" (at -3.81 2.54 0)
@@ -66,13 +68,15 @@
     (property "Datasheet" "" (at -3.81 2.54 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (symbol "OLD Driver_1_1"
+    (symbol "OLED Driver_0_0"
       (text_box ""
         (at -7.62 10.16 0) (size 15.24 -19.05)
         (stroke (width 0) (type default))
         (fill (type none))
         (effects (font (size 1.27 1.27)) (justify left top))
       )
+    )
+    (symbol "OLED Driver_1_1"
       (pin input line (at -10.16 7.62 0) (length 2.54)
         (name "GND" (effects (font (size 1.27 1.27))))
         (number "1" (effects (font (size 1.27 1.27))))
