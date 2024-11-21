@@ -5,6 +5,166 @@
 	(uuid "cea3ca6f-b7d1-43d8-9867-cd2ab3cb5e64")
 	(paper "A4")
 	(lib_symbols
+		(symbol "Connector:Conn_01x02_Pin"
+			(pin_names
+				(offset 1.016) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 2.54 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Conn_01x02_Pin"
+				(at 0 -5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x02, script generated"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_locked" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Conn_01x02_Pin_1_1"
+				(polyline
+					(pts
+						(xy 1.27 -2.54) (xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy 0.8636 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 0.8636 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "Pin_1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 3.81)
+					(name "Pin_2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "Connector:Conn_01x05_Pin"
 			(pin_names
 				(offset 1.016) hide)
@@ -1756,10 +1916,6 @@
 		(uuid "4af024b6-8265-4975-88a0-49e3422d1c28")
 	)
 	(no_connect
-		(at 64.77 114.3)
-		(uuid "4b0ddc3b-86f6-41a9-be54-3d91489cc942")
-	)
-	(no_connect
 		(at 64.77 73.66)
 		(uuid "53c4f249-c738-48e8-8b12-a64fa326a1fb")
 	)
@@ -1786,10 +1942,6 @@
 	(no_connect
 		(at 120.65 111.76)
 		(uuid "a9bd7a94-c752-4ffe-bd4c-dee709697dbd")
-	)
-	(no_connect
-		(at 64.77 116.84)
-		(uuid "afd04602-879a-4dc3-84da-621455f8258a")
 	)
 	(no_connect
 		(at 120.65 68.58)
@@ -3216,6 +3368,28 @@
 			)
 		)
 	)
+	(global_label "Vin"
+		(shape input)
+		(at 128.27 35.56 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7f9aa3a6-d7fe-4027-91f4-23bba70c6e37")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 134.0976 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "SDI"
 		(shape input)
 		(at 212.09 124.46 180)
@@ -3854,6 +4028,28 @@
 			)
 		)
 	)
+	(global_label "pwr_GND"
+		(shape input)
+		(at 128.27 38.1 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "cad3d90d-9319-46f6-a2d6-79c1aca3667f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 139.359 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "CS 1"
 		(shape input)
 		(at 123.19 83.82 0)
@@ -4096,6 +4292,28 @@
 			)
 		)
 	)
+	(global_label "pwr_GND"
+		(shape input)
+		(at 64.77 114.3 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e27be54d-0644-4ac6-96ab-3a99109f46f3")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 53.681 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "Vss"
 		(shape input)
 		(at 212.09 107.95 180)
@@ -4219,6 +4437,28 @@
 		(uuid "e8ab8c73-5bcf-4e58-9df8-e45320c93ca4")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 205.2343 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "Vin"
+		(shape input)
+		(at 64.77 116.84 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "efcc51ac-08e1-441c-bd67-9699b0595a4c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 58.9424 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4498,6 +4738,74 @@
 			(project "Mother"
 				(path "/cea3ca6f-b7d1-43d8-9867-cd2ab3cb5e64"
 					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Conn_01x02_Pin")
+		(at 123.19 35.56 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "631adbde-fff2-4bde-a6ef-b20157c520b4")
+		(property "Reference" "J2"
+			(at 123.825 30.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Conn_01x02_Pin"
+			(at 123.825 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Connector_PinHeader_1.27mm:PinHeader_1x02_P1.27mm_Vertical"
+			(at 123.19 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 123.19 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x02, script generated"
+			(at 123.19 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "cbc0fbb2-692d-4821-a2fe-4393baeacf0a")
+		)
+		(pin "1"
+			(uuid "30202a96-a82e-4e37-8528-638ffde862a3")
+		)
+		(instances
+			(project ""
+				(path "/cea3ca6f-b7d1-43d8-9867-cd2ab3cb5e64"
+					(reference "J2")
 					(unit 1)
 				)
 			)
