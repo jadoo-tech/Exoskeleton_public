@@ -1,4 +1,4 @@
-23779756981745861
+23791884743493550
 AD5293
 AD5293
 
@@ -28896,12 +28896,26 @@ solder Pin_ with flat fork
 1
 1
 Connector_PinHeader_1.00mm
-GoldFingers_1x07_P1.00mm
+GoldFingers_1x07_P2.50mm
 surface-mounted straight pin header, 2x07, 1.00mm pitch, double rows
 Surface mounted pin header SMD 2x07 1.00mm double row
 0
-14
 7
+7
+Connector_PinHeader_1.00mm
+GoldFingers_1x40_0.155mm_DoubleSided
+
+
+0
+40
+1
+Connector_PinHeader_1.00mm
+GoldFingers_1x40_0.155mm_DoubleSided_Alternating
+
+
+0
+40
+40
 Connector_PinHeader_1.00mm
 PinHeader_1x01_P1.00mm_Horizontal
 Through hole angled pin header, 1x01, 1.00mm pitch, 2.0mm pin length, single row
@@ -96711,3 +96725,38 @@ Varistor VF
 0
 2
 2
+logo
+logo
+
+
+0
+0
+0
+logo
+logo_HorizontalText
+
+
+0
+0
+0
+logo
+logo_Horizontal_small
+
+
+0
+0
+0
+logo
+logo_small
+
+
+0
+0
+0
+logo
+logo_withName
+
+
+0
+0
+0
