@@ -1,4 +1,4 @@
-23790177460280465
+23793647052147888
 AD5293
 AD5293
 
@@ -28902,6 +28902,20 @@ Surface mounted pin header SMD 2x07 1.00mm double row
 0
 7
 7
+Connector_PinHeader_1.00mm
+GoldFingers_1x40_0.155mm_DoubleSided
+
+
+0
+40
+40
+Connector_PinHeader_1.00mm
+GoldFingers_1x40_0.155mm_DoubleSided_Alternating
+
+
+0
+40
+40
 Connector_PinHeader_1.00mm
 PinHeader_1x01_P1.00mm_Horizontal
 Through hole angled pin header, 1x01, 1.00mm pitch, 2.0mm pin length, single row
