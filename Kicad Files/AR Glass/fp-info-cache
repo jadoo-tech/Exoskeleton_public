@@ -1,11 +1,4 @@
-23790177460280465
-AD5293
-AD5293
-
-
-0
-14
-14
+23781555076289139
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -28896,12 +28889,33 @@ solder Pin_ with flat fork
 1
 1
 Connector_PinHeader_1.00mm
+FFC_Jumper_0.50mm_01x07
+surface-mounted straight pin header, 2x07, 1.00mm pitch, double rows
+Surface mounted pin header SMD 2x07 1.00mm double row
+0
+7
+7
+Connector_PinHeader_1.00mm
 GoldFingers_1x07_P2.50mm
 surface-mounted straight pin header, 2x07, 1.00mm pitch, double rows
 Surface mounted pin header SMD 2x07 1.00mm double row
 0
 7
 7
+Connector_PinHeader_1.00mm
+GoldFingers_1x40_0.155mm_DoubleSided
+
+
+0
+40
+40
+Connector_PinHeader_1.00mm
+GoldFingers_1x40_0.155mm_DoubleSided_Alternating
+
+
+0
+40
+40
 Connector_PinHeader_1.00mm
 PinHeader_1x01_P1.00mm_Horizontal
 Through hole angled pin header, 1x01, 1.00mm pitch, 2.0mm pin length, single row
@@ -57840,27 +57854,6 @@ heatsink
 0
 0
 0
-INA823DR
-D0008A_SOIC_TEX
-
-XINA823DR 
-0
-8
-8
-INA823DR
-D0008A_SOIC_TEX-L
-
-XINA823DR 
-0
-8
-8
-INA823DR
-D0008A_SOIC_TEX-M
-
-XINA823DR 
-0
-8
-8
 Inductor_SMD
 L_6.3x6.3_H3
 Choke, SMD, 6.3x6.3mm 3mm height
@@ -64686,13 +64679,6 @@ Yellow 5381 Series LED
 0
 2
 2
-LF356M
-SOIC127P599X175-8N
-
-
-0
-8
-8
 MCU_RaspberryPi_and_Boards
 Crystal_SMD_HC49-US
 SMD Crystal HC-49-SD http://cdn-reichelt.de/documents/datenblatt/B400/xxx-HC49-SMD.pdf, 11.4x4.7mm^2 package
@@ -90628,27 +90614,6 @@ Logo WEEE
 0
 0
 0
-TLCs
-TLC59711
-
-
-0
-38
-35
-TLCs
-Tlc5947
-
-
-0
-64
-64
-Teensy 4.1
-Teensy41
-
-
-0
-67
-67
 TerminalBlock
 TerminalBlock_Altech_AK300-2_P5.00mm
 Altech AK300 terminal block, pitch 5.0mm, 45 degree angled, see http://www.mouser.com/ds/2/16/PCBMETRC-24178.pdf
