@@ -1,0 +1,13 @@
+# of Boards,1,EXOSKELETON BILL OF MATERIALS / DATASHEETS,,,,,,,Total Price ($),40.34,
+Mouser Part#/SKU,,Manufacturer Part #,Digi-key Part#/SKU,Description,Datasheet Link,Purchase URL,Qty,Min Qty,Price/unit ($),Total Price ($),Note (+ Please briefly explain you choose this component)
+SMD,,,,,,,,,,,
+R1,,RMCF0805FT100R,RMCF0805FT100RCT-ND,"100 Ohms ±1% 0.125W, 1/8W Chip Resistor 0805 (2012 Metric) Automotive AEC-Q200 Thick Film",https://www.seielect.com/catalog/sei-rmcf_rmcp.pdf,https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0805FT100R/1760711,1,1,0.1,0.1,
+R2,,RMCF0805FT10K0,RMCF0805FT10K0CT-ND,"10 kOhms ±1% 0.125W, 1/8W Chip Resistor 0805 (2012 Metric) Automotive AEC-Q200 Thick Film",https://www.seielect.com/catalog/sei-rmcf_rmcp.pdf,https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0805FT10K0/1760676,1,1,0.1,0.1,
+U1,,MAX31855KASA+T,MAX31855KASA+TCT-ND,IC CONV THERMOCOUPLE-DGTL SOIC,https://www.analog.com/media/en/technical-documentation/data-sheets/max31855.pdf,https://www.digikey.com/en/products/detail/analog-devices-inc-maxim-integrated/MAX31855KASA-T/2591213,1,1,10.85,10.85,
+Q1,,BUK9M52-40EX,1727-7317-1-ND,N-Channel 40 V 17.6A (Tj) 31W Surface Mount LFPAK33,https://assets.nexperia.com/documents/data-sheet/BUK9M52-40E.pdf,https://www.digikey.com/en/products/detail/nexperia-usa-inc/BUK9M52-40EX/5981252,1,1,0.75,0.75,
+U2,,LSM6DSLTR,497-16705-1-ND,IMU ACCEL/GYRO I2C/SPI 14LGA,https://www.st.com/content/ccc/resource/technical/document/datasheet/ee/23/a0/dc/1d/68/45/52/DM00237456.pdf/files/DM00237456.pdf/jcr:content/translations/en.DM00237456.pdf,https://www.digikey.com/en/products/detail/stmicroelectronics/LSM6DSLTR/6192804,1,1,4.36,4.36,
+"C1, C2",,CL05B104KP5NNNC,1276-1002-1-ND,CAP CER 0.1UF 10V X7R 0402,https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/609/CL05B104KP5NNNC_Spec.pdf,https://www.digikey.com/en/products/detail/samsung-electro-mechanics/CL05B104KP5NNNC/3886660,2,1,0.08,0.16,
+,,,,,,,,,,,
+Through-Hole Components,,,,,,,,,,,
+J1-J3,,XT60 F Horizontal,,Connectors for power/peltier/thermocouple,https://www.jameco.com/Jameco/Products/ProdDS/2338287.pdf,https://www.jameco.com/z/XT60H-F-Amass-XT60-Female-Bullet-Connector-2-Position-with-Hood-for-RC-Battery-Free-Hanging-60A_2338287.html,3,1,0.95,2.85,
+A1,,Arduino_Nano_v3.x,,Arduino Nano,https://docs.arduino.cc/resources/datasheets/A000005-datasheet.pdf,https://store-usa.arduino.cc/products/arduino-nano,1,1,21.17,21.17,
