@@ -2463,6 +2463,10 @@
 		(uuid "af918d96-7af9-4a7a-b04f-4ec8ddfbcaa8")
 	)
 	(no_connect
+		(at 86.36 110.49)
+		(uuid "b1d88730-8654-47c4-982d-a9520f7ce4b1")
+	)
+	(no_connect
 		(at 86.36 102.87)
 		(uuid "bd52f1c4-01a7-4dae-a03c-efb564407e55")
 	)
@@ -2793,16 +2797,6 @@
 			(type default)
 		)
 		(uuid "86d21917-8785-4d7b-a549-7570bc9d400d")
-	)
-	(wire
-		(pts
-			(xy 80.01 110.49) (xy 86.36 110.49)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8c0b6f63-8e76-4dbe-bc81-bf3335d5f67d")
 	)
 	(wire
 		(pts
@@ -3530,28 +3524,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "CS_gyro"
-		(shape input)
-		(at 80.01 110.49 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ac09f46a-a676-4bc6-b42f-9dba432a7aac")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 69.5259 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 				(hide yes)
 			)
 		)
