@@ -31,6 +31,8 @@
    #### USB/Device not recognized ####
    1. run `ls /dev/tty*` to see if the device is recognized.
    2. if not, try switching the cables.
+   #### Unable to connect from other devices ####
+   1. check the host address at constants.py file (`HOST` variable) matches the server IP (run `hostname -I` at the server pi)
 
 ## Libraries used:
 - `pip install opencv-python`
