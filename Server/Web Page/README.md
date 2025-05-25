@@ -19,7 +19,7 @@
 ## Flask
 1. Navigate to the folder: `cd /var/www` and activate virtual space `source myenv/bin/activate`
 2. Navigate to the folder with the Flask code. `cd /var/www/backend` for Exoskeleton server pi
-3. Run the Flask code, app.py, `gunicorn -w 1 -b 127.0.0.1:8000 app:app` for data fetch. If it doesnt work, try `export PYTHONPATH=.
+3. Run the Flask code, app.py, `gunicorn -w 1 -b 0.0.0.0:8000 app:app` for data fetch. If it doesnt work, try `export PYTHONPATH=.
    gunicorn -w 1 -b 127.0.0.1:8000 app:app`
 5. If it throws error `[ERROR] Connection in use` Try killing the process at port 8000. If there is no such process in the port wait few minutes then try running step 3. Otherwise, try using a different port `gunicorn -w 1 -b 127.0.0.1:8010 app:app`. When you do this, make sure you change the port in the default file to `under nginx/sites-available, proxy_pass address`
    1. If the address does not connect, check the host address with `ifconfig -a`. Should be with wan0.
@@ -27,7 +27,10 @@
    ### ERRORS & DEBUGGING STEPS ###
    #### `OSError: [Errno 98] Address already in use` ####
    1. Check if something is using the port: `sudo lsof -i :<PORT>` and kill the operation if there is something running
-   2. 
+   2. If nothing is running, check the firewall status: `sudo ufw status` and see if the ports (8000, 9158, and 1863 from constants.py) are allowed. If not, allow it with `sudo ufw allow <port>`
+   #### USB/Device not recognized ####
+   1. run `ls /dev/tty*` to see if the device is recognized.
+   2. if not, try switching the cables.
 
 ## Libraries used:
 - `pip install opencv-python`
