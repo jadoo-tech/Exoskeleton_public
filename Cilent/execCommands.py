@@ -1,6 +1,7 @@
 import socket
 import serial
 import time
+import subprocess
 
 import constants
 
@@ -41,7 +42,7 @@ if __name__ == '__main__':
 		elif (command[0] == 'display'):
 			print("command found")
 			oledPrint(command[1])
-		elif (command[0] == 'start video'):
+		elif (command[0] == 'start_video'):
 			print("command found")
 			startVideo()
 		else:

@@ -1,6 +1,6 @@
 # Defining Socket 
 
-HOST = '10.57.41.213'
+HOST = '10.41.41.112'
 PORTIN = 9158		# This has to be kept same with client's PORTOUT #
 PORTOUT = 1863		# This has to be kept same with client's PORTIN #
 PORT_VIDEO = 8612	# This has to be kept same with client's PORT_VIDEO #

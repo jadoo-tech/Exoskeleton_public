@@ -108,7 +108,7 @@ function addRow(col) {
 
 function startVideoStream(){
     var cId = document.getElementById('videoClientId').value;
-    var command = 'start video on Client: ' + cId;
+    var command = 'start_video on Client: ' + cId;
     fetch('/commandClient', {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain' },

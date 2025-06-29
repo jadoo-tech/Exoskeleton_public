@@ -74,9 +74,10 @@ def commandClient():
         print(msg, "command recieved")
         command = msg[0]
         cId = msg[1]
-        if (command == 'start video'):
+        if (command == 'start_video'):
             if (cId not in clients_video):
                 clients_video.append(cId)
+                sendCommand(command, cId)
                 displayVideo(cId)
                 return f"Command: '{command}' sent to video client {cId}."
             else:
