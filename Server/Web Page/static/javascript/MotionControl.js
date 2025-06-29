@@ -7,9 +7,7 @@ function turnMotor(all){
         headers: { 'Content-Type': 'text/plain' },
         body: command
     }).then(response => response.text())
-    .then(data => { document.getElementById('testSection').innerText = data;
-                    console.log(data);
-    });
+    .then(data => {console.log(data);});
     if (all){
 		return
 	} else {
@@ -106,4 +104,17 @@ function addRow(col) {
     document.getElementById('stepSz').value = '';
     document.getElementById('displayWord').value = '';
     document.getElementById('displayIndex').value = '';
+}
+
+function startVideoStream(){
+    var cId = document.getElementById('videoClientId').value;
+    var command = 'start video on Client: ' + cId;
+    fetch('/commandClient', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: command
+    }).then(response => response.text())
+    .then(data => { document.getElementById('testSection').innerText = data;
+                    console.log(data);
+    });
 }

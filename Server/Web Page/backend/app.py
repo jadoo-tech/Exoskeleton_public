@@ -23,28 +23,18 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 ### CIENT PI COMMUNICATION ###
 clients_exec = {}
-videoThreads = {}
+clients_video = []
 sock_exec = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_exec.bind((constants.HOST, constants.PORTOUT))
 
-#def runRecv(cId):
-#	subprocess.run(['python3', 'recvFile.py', str(cId)])
 
-def initialize_Connection_Exec(cId):
+def initialize_Connection(cId):
     sock_exec.listen()
+#	subprocess.run(['python3', 'recvFile.py', str(cId)])
     print(f'Initiating port from new client')
     try:
         clients_exec.update({cId:sock_exec.accept()})
-        print(f'Connected with client for recieving data')
-    except Exception as e:
-        print(e)
-
-def initialize_Connection_Video(cId):
-    sock_video.listen()
-    print(f'Initiating port from new client')
-    try:
-        clients_video.update({cId:sock_exec.accept()})
-        print(f'Connected with client for recieving data')
+        print(f'Connected with client {cId} to send commands')
     except Exception as e:
         print(e)
 
@@ -65,12 +55,14 @@ def sendCommand(command, cId):
     conn = clients_exec.get(cId) 
     if (not conn):
         print("Initializing")
-        initialize_Connection_Exec(cId)
+        initialize_Connection(cId)
         conn = clients_exec.get(cId)
+
     if (command != 'stop sending'):
         print(f"Sending {command} to {cId}")
         conn[0].send(command.encode())
     else:
+        print(f"Closing connection with {cId}")
         conn[0].send(str(constants.ENDWORD).encode())
         conn[0].close()
         clients_exec.pop(cId)
@@ -82,9 +74,13 @@ def commandClient():
         print(msg, "command recieved")
         command = msg[0]
         cId = msg[1]
-        if (command == 'camera'):
-            displayVideo(cId)
-            return f"Command: '{command}' sent to client {cId}."
+        if (command == 'start video'):
+            if (cId not in clients_video):
+                clients_video.append(cId)
+                displayVideo(cId)
+                return f"Command: '{command}' sent to video client {cId}."
+            else:
+                return f"Video client {cId} already running."
         if (cId):
             sendCommand(command, cId)
             return f"Command: '{command}' sent to client {cId}."

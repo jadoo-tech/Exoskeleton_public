@@ -20,7 +20,9 @@ def oledPrint(command):
 		time.sleep(1)
 		ser.write(("display "+str(ind)+" "+msg+"\r").encode('utf-8'))
 		
-
+def startVideo():
+	subprocess.run(['python3', 'videoDisplay.py'])
+	
 if __name__ == '__main__':
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	print(f'connecting {constants.HOST} at {constants.PORTIN}')
@@ -32,12 +34,16 @@ if __name__ == '__main__':
 		command = msg.split(' ', 1)
 		if (msg != ''):
 			print(f'Sever says: {msg}, command: {command}')
+		
 		if (command[0] == 'step'):
 			print("command found")
 			turnMotor(command[1])
 		elif (command[0] == 'display'):
 			print("command found")
 			oledPrint(command[1])
+		elif (command[0] == 'start video'):
+			print("command found")
+			startVideo()
 		else:
 			print("No Valid Command Found")
 				

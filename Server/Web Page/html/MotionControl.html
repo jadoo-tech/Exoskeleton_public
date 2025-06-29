@@ -10,6 +10,21 @@
 <body>
 	<h1>Control Table</h1>
     <div class="container">
+        <div class="video-section">
+            <h2>Video Streams</h2>
+            <div class="video-controls">
+                <input type="text" id="cId" placeholder="Enter client ID"/>
+                <button onclick="startVideoStream()">Start Video</button>
+            </div>
+            <div class="video-table-container">
+                <table id="video_table">
+                    <tbody>
+                        <!-- Video streams will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <table id="dynamic-table">
             <thead>
                 <tr>
@@ -17,6 +32,7 @@
                     <th>Pi Ids</th>
                     <th>Motor</th>
                     <th>Display</th>
+                    <th>Video</th>
                 </tr>
                 <tr>
                     <th><button onclick = "updateAll()">Apply All</button></th>
@@ -27,6 +43,10 @@
                     <th><input type="number" id="displayIndex" class = "small_input_boxes" min="0" max="2" placeholder = "Enter index" />
                         <input type="text" id="displayWord" placeholder = "Enter word" />
                         <button onclick = "oledDisplay(false)">Display</button>
+                    </th>
+                    <th><input type="number" id="videoClientId" placeholder = "Enter client id" /></th>
+                    <th><button onclick = "startVideoStream()">Start Video</button>
+                        <button onclick = "stopVideoStream()">Stop Video</button>
                     </th>
                 </tr>
             </thead>
