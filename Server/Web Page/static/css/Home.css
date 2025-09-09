@@ -1,0 +1,103 @@
+/* General Styles */
+body {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+header {
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding: 50px 0;
+    position: relative;
+}
+
+nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#login-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+#login-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+
+/* Overview Section */
+#overview {
+    background: url('exoskeleton.jpg') no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 40px;
+    background-color: #625399;
+    color: white;
+    text-align: center;
+}
+
+/* Team Section */
+.team-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+}
+
+.team-section .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.team-section p {
+    flex: 1;
+    margin: 20px;
+}
+
+.team-section img {
+    width: 300px;
+    height: auto;
+    margin: 20px;
+}
+
+.project-title {
+    text-align: center;
+    width: 100%;
+}
+
+/* Dropdown Menu after Login */
+#dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 34px;
+    background-color: rgba(255, 255, 255, 0.599);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+#dropdown-menu a {
+    color: rgba(0, 0, 0, 0.71);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+#dropdown-menu a:hover {
+    background-color: #ddd;
+}

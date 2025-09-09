@@ -1,0 +1,186 @@
+body {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* New Video Section */
+
+.control-section {
+    flex: 1;
+    min-width: 600px;
+}
+
+.video-section {
+    flex: 0 0 auto;
+    min-width: 300px;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.video-section h2 {
+    margin-top: 0;
+    color: #333;
+    text-align: center;
+}
+
+.video-controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.video-controls input[type="number"] {
+    width: 150px;
+    margin-right: 10px;
+    padding: 5px;
+}
+
+.video-controls button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.video-controls button:hover {
+    background-color: #45a049;
+}
+
+.video-table-container {
+    overflow-x: auto;
+}
+
+#video_table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+#video_table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    vertical-align: top;
+    min-width: 200px;
+}
+
+.video-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.client-id {
+    font-weight: bold;
+    color: #333;
+    background-color: #f4f4f4;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.video-display {
+    width: 100%;
+    max-width: 180px;
+    height: 135px;
+    background-color: #f9f9f9;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 12px;
+}
+
+.video-display video {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* Changes (Video Section) end here */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+input[type="text"], input[type="number"] {
+    width: 100px; /* Default width, can be changed */
+    padding: 5px;
+    box-sizing: border-box;
+}
+.small_input_boxes {
+	width: 50px; /* Default width, can be changed */
+}
+
+button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .video-section {
+        max-width: 100%;
+        order: -1; /* Move video section to top */
+    }
+    
+    .control-section {
+        min-width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .video-controls input[type="number"] {
+        width: 120px;
+        margin-bottom: 10px;
+    }
+    
+    .video-controls button {
+        display: block;
+        margin: 5px auto;
+        width: 150px;
+    }
+    
+    #video_table td {
+        min-width: 150px;
+    }
+}

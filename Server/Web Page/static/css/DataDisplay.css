@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f7c0c0;
+}
+body {
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+}
