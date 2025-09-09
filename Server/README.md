@@ -21,11 +21,8 @@ To install Ngnix at the server pi:
    sudo systemctl start nginx
    sudo systemctl enable nginx
 4. ```sudo systemctl status nginx```
-5. Install ufw
 
 # Package List
 1. Ngnix
 2. Flask
 3. Yolo
-4. gunicorn
-5. UFW
