@@ -21,14 +21,14 @@ def oledPrint(command):
 		time.sleep(1)
 		ser.write(("display "+str(ind)+" "+msg+"\r").encode('utf-8'))
 		
-def startVideo():
-	subprocess.run(['python3', 'videoDisplay.py'])
+#def startVideo():
+#	subprocess.run(['python3', 'videoDisplay.py'])
 	
 if __name__ == '__main__':
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	print(f'connecting {constants.HOST} at {constants.PORTIN}')
+	print(f'connecting {constants.HOST} at {constants.PORTIN} to recieve commands\n')
 	sock.connect((constants.HOST, constants.PORTIN))
-	print(f'Connection Successful at {constants.HOST}, port {constants.PORTIN}\n')
+	print(f'Connection Successful at {constants.HOST}, port {constants.PORTIN} o recieve commands\n')
 	
 	msg = sock.recv(constants.RECV_MSG_SIZE).decode()
 	while (msg != constants.ENDWORD):
@@ -43,8 +43,8 @@ if __name__ == '__main__':
 			print("command found")
 			oledPrint(command[1])
 		elif (command[0] == 'start_video'):
-			print("command found")
-			startVideo()
+			print("command found, done nothing")
+			#startVideo()
 		else:
 			print("No Valid Command Found")
 				

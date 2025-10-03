@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, Response, abort
 import csv
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -17,28 +17,66 @@ import sys
 
 import constants
 ################################
-
 app = Flask(__name__, template_folder = '../html', static_folder='../static')
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1) 
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+
+latest_frames = {}  # Store latest frame for each client
 
 ### CIENT PI COMMUNICATION ###
 clients_exec = {}
-clients_video = []
+clients_video = {}
 sock_exec = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_exec.bind((constants.HOST, constants.PORTOUT))
+sock_video = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock_video.bind((constants.HOST, constants.PORT_VIDEO))
 
 
 def initialize_Connection(cId):
-    sock_exec.listen()
-#	subprocess.run(['python3', 'recvFile.py', str(cId)])
-    print(f'Initiating port from new client')
+    #subprocess.run(['python3', 'recvFile.py', str(cId)])
     try:
+        sock_exec.listen(1)
+        print(f'Initiating port from new client at {constants.PORTOUT}')
         clients_exec.update({cId:sock_exec.accept()})
         print(f'Connected with client {cId} to send commands')
+
+        sock_video.listen(1)
+        print(f'Initiating port from new client at {constants.PORT_VIDEO}')
+        clients_video.update({cId:sock_video.accept()})
+        print(f'Connected with client {cId} to recieve video')
+
+        threading.Thread(target=receive_frames, args=(cId,)).start()
     except Exception as e:
         print(e)
-
+    
+def receive_frames(vId):
+    global latest_frames
+    conn_video = clients_video.get(vId)[0]
+    print(f"Recieving video from {vId}, conn: {conn_video}")
+    while True:
+        # Receive frame size
+        frame_size_data = conn_video.recv(4)
+        if not frame_size_data:
+            break
+        frame_size = int.from_bytes(frame_size_data, byteorder='big')
+        # Receive frame data
+        frame_data = b''
+        while len(frame_data) < frame_size:
+            chunk = conn_video.recv(frame_size - len(frame_data))
+            if not chunk:
+                break
+            frame_data += chunk
+        if len(frame_data) == frame_size:
+            latest_frames.update({vId:frame_data})
+            print(f"Received frame from {vId}")
+            
 ###############################
+def gen(cId):
+    while True:
+        frame = latest_frames.get(cId)
+        if frame is not None:
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+        time.sleep(1/15)
 
 def read_csv():
     data = []
@@ -48,8 +86,12 @@ def read_csv():
             data.append(row)
     return data
 
+@app.route('/video_feed/<vId>')
 def displayVideo(vId):
-    subprocess.run(['python3', 'videoDisplay.py', str(vId)])
+    print(f"Displaying video for {vId}")
+    if vId not in latest_frames:
+        return abort(404, description=f"No video stream for client {vId}")
+    return Response(gen(vId), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 def sendCommand(command, cId):
     conn = clients_exec.get(cId) 
@@ -76,12 +118,8 @@ def commandClient():
         cId = msg[1]
         if (command == 'start_video'):
             if (cId not in clients_video):
-                clients_video.append(cId)
                 sendCommand(command, cId)
-                displayVideo(cId)
-                return f"Command: '{command}' sent to video client {cId}."
-            else:
-                return f"Video client {cId} already running."
+            print(f"Video for {cId} requested")
         if (cId):
             sendCommand(command, cId)
             return f"Command: '{command}' sent to client {cId}."
@@ -107,6 +145,13 @@ def open_controls_page():
 @app.route('/')
 def open_home_page():
     return render_template('Home.html')
+
+@app.route('/video_feed/<client_id>')
+def video_feed(client_id):
+    if client_id not in latest_frames:
+        # Optionally, wait for the first frame or return 404
+        return abort(404, description=f"No video stream for client {client_id}")
+    return Response(gen(client_id), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     print("Sockets Created")

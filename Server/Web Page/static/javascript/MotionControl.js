@@ -114,7 +114,19 @@ function startVideoStream(){
         headers: { 'Content-Type': 'text/plain' },
         body: command
     }).then(response => response.text())
-    .then(data => { document.getElementById('testSection').innerText = data;
-                    console.log(data);
+    .then(data => {
+        document.getElementById('testSection').innerText = data;
+        console.log(data);
+        // Add a new video stream for this client if not already present
+        var container = document.getElementById('videoStreamRow');
+        if (!document.getElementById('video_' + cId)) {
+            var img = document.createElement('img');
+            img.src = '/video_feed/' + cId; // You will need to implement this endpoint
+            img.alt = 'Live Video Stream for ' + cId;
+            img.id = 'video_' + cId;
+            img.style.width = '320px';  // TODO: make this dynamic | change size later
+            img.style.height = '240px';
+            container.appendChild(img);
+        }
     });
 }

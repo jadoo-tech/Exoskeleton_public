@@ -8,6 +8,7 @@ import io
 from PIL import Image
 
 def send_video_stream(sock, cId):
+    print("video called")
     # Initialize Picamera2
     picam2 = Picamera2()
     config = picam2.create_still_configuration(main={'size': (640, 480)}, buffer_count=1)
@@ -34,19 +35,19 @@ def send_video_stream(sock, cId):
                 sock.send(frame_data)
                 frame_count += 1
                 if frame_count % 30 == 0:
-                    print(f"Client videoDisplay.py: Sent {frame_count} frames (Client: {cId})")
+                    print(f"Sent {frame_count} frames (Client: {cId})")
             except Exception as e:
-                print(f"Client videoDisplay.py: Error sending frame: {e}")
+                print(f"Error sending frame: {e}")
                 break
             # Small delay to control frame rate
             time.sleep(1/15)  # 15 FPS
     except KeyboardInterrupt:
-        print("Client videoDisplay.py: Video streaming stopped by user")
+        print("Video streaming stopped by user")
     except Exception as e:
-        print(f"Client videoDisplay.py: Error in video streaming: {e}")
+        print(f"Error in video streaming: {e}")
     finally:
         picam2.close()
-        print(f"Client videoDisplay.py: Video streaming ended (Client: {cId})")
+        print(f"Video streaming ended (Client: {cId})")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -54,14 +55,15 @@ if __name__ == "__main__":
         cId = 'TestId'
     else:
         cId = sys.argv[1]
-    print(f"Client videoDisplay.py: Starting video stream to server (Client: {cId})")
+    
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    time.sleep(2)
     try:
-        print(f"Client videoDisplay.py: Connecting to server at {constants.HOST}:{constants.PORT_VIDEO}")
+        print(f"Connecting to server at {constants.HOST}:{constants.PORT_VIDEO} to display video")
         sock.connect((constants.HOST, constants.PORT_VIDEO))
-        print(f"Client videoDisplay.py: Connected to server for video streaming (Client: {cId})")
+        print(f"Connected to server for video streaming (Client: {cId})")
         send_video_stream(sock, cId)
     except Exception as e:
-        print(f"Client videoDisplay.py: Error connecting to server: {e}")
+        print(f"Error connecting to server for video: {e}")
     finally:
         sock.close() 

@@ -19,8 +19,9 @@ def sendData(fName, fType):
 
 if __name__ == '__main__':
 	sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	print(f'connecting {constants.HOST} at {constants.PORTOUT} to send data\n')
 	sock.connect((constants.HOST, constants.PORTOUT))
-	print(f'Connection Successful at {constants.HOST}, port {constants.PORTOUT}\n')
+	print(f'Connection Successful at {constants.HOST}, port {constants.PORTOUT} to send data\n')
 	
 	sendData(constants.FILE_NAME, constants.FILE_TYPE)
 	

@@ -38,11 +38,7 @@ def receive_and_display_video(conn, cId):
                     if frame is not None:
                         # Display the frame
                         cv2.imshow(window_name, frame)
-                        
-                        # Break loop if 'q' is pressed
-                        if cv2.waitKey(1) & 0xFF == ord('q'):
-                            print(f"Server videoDisplay.py: Quit requested for client {cId}")
-                            break
+                        print(f"VideoDisplay at {cId}: Frame shape: {frame.shape}  |   dtype: {frame.dtype}")
                     else:
                         print(f"Server videoDisplay.py: Failed to decode frame from client {cId}")
                 else:
@@ -61,10 +57,9 @@ def receive_and_display_video(conn, cId):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python3 videoDisplay.py <client_id>")
-        sys.exit(1)
-    
-    cId = sys.argv[1]
+        cId = 'TEst'
+    else:
+        cId = sys.argv[1]
     print(f"Server videoDisplay.py: Starting video display for client {cId}")
     
     # Create socket for video connection
@@ -72,7 +67,7 @@ if __name__ == "__main__":
     
     try:
         # Bind to video port
-        sock.bind((constants.HOST, constants.PORT_VIDEO))
+        sock.bind(('0.0.0.0', constants.PORT_VIDEO))
         sock.listen(1)
         print(f"Server videoDisplay.py: Waiting for client {cId} on port {constants.PORT_VIDEO}")
         
