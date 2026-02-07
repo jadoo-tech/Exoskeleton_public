@@ -25,7 +25,11 @@ function oledDisplay(all){
         headers: { 'Content-Type': 'text/plain' },
         body: command
     }).then(response => response.text())
-    .then(data => { document.getElementById('testSection').innerText = data;
+    .then(data => {
+                    var status = document.getElementById('testSection');
+                    if (status) {
+                        status.innerText = data;
+                    }
                     console.log(data);
     });
     if (all){
@@ -115,7 +119,10 @@ function startVideoStream(){
         body: command
     }).then(response => response.text())
     .then(data => {
-        document.getElementById('testSection').innerText = data;
+        var status = document.getElementById('testSection');
+        if (status) {
+            status.innerText = data;
+        }
         console.log(data);
         // Add a new video stream for this client if not already present
         var container = document.getElementById('videoStreamRow');

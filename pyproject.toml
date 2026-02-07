@@ -1,0 +1,31 @@
+[project]
+name = "exoskeleton-public"
+version = "0.1.0"
+description = "Server/client runtime for the Jadoo exoskeleton project"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "flask>=3.1,<4",
+  "gunicorn>=23,<26",
+  "numpy>=1.26,<3",
+  "opencv-python>=4.10,<5",
+  "pillow>=10,<13",
+  "pyserial>=3.5,<4",
+  "werkzeug>=3.1,<4",
+]
+
+[project.optional-dependencies]
+rpi = [
+  "picamera2>=0.3.34; platform_system == 'Linux'",
+]
+
+[dependency-groups]
+test = [
+  "pytest>=8.3,<9",
+]
+
+[tool.uv]
+package = false
+dependency-metadata = [
+  { name = "python-prctl", version = "1.8.1", requires-dist = [] },
+]

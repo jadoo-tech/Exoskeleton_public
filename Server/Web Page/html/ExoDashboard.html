@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exo Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ExoDashboard.css') }}" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">Exo Dashboard</div>
+        <nav class="topnav">
+            <a href="/">Home</a>
+            <a href="/motionControls">Motion Controls</a>
+        </nav>
+    </header>
+
+    <main class="page">
+        <section class="summary-grid">
+            <article class="summary-card">
+                <h2>Connected Clients</h2>
+                <p id="connectedCount">0</p>
+            </article>
+            <article class="summary-card">
+                <h2>Video Active</h2>
+                <p id="videoCount">0</p>
+            </article>
+            <article class="summary-card">
+                <h2>Last Refresh</h2>
+                <p id="lastRefresh">-</p>
+            </article>
+        </section>
+
+        <section class="panel">
+            <div class="panel-head">
+                <h1>Clients</h1>
+                <button id="refreshBtn" type="button">Refresh</button>
+            </div>
+            <div id="clientsList" class="clients-grid"></div>
+            <p id="emptyState" class="empty-state">No clients connected.</p>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='javascript/ExoDashboard.js') }}"></script>
+</body>
+</html>

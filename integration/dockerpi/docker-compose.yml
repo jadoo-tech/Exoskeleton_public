@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  server-pi:
+    build:
+      context: ./dockerpi-extended
+    container_name: exo-server-pi
+    environment:
+      DOCKERPI_EXTRA_HOSTFWD: "hostfwd=tcp::1863-:1863,hostfwd=tcp::8612-:8612,hostfwd=tcp::9158-:9158,hostfwd=tcp::8000-:8000"
+    ports:
+      - "6022:5022"
+      - "18000:8000"
+    volumes:
+      - ./state/server:/sdcard
+    networks:
+      exonet:
+        ipv4_address: 172.30.0.10
+    stdin_open: true
+    tty: true
+
+  client-pi:
+    build:
+      context: ./dockerpi-extended
+    container_name: exo-client-pi
+    ports:
+      - "7022:5022"
+    volumes:
+      - ./state/client:/sdcard
+    networks:
+      exonet:
+        ipv4_address: 172.30.0.11
+    stdin_open: true
+    tty: true
+
+networks:
+  exonet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24

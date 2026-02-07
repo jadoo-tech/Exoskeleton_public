@@ -1,0 +1,148 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(140deg, #f8fbff 0%, #eaf3ff 55%, #f4f7fb 100%);
+    color: #12263a;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 22px;
+    background: #12304a;
+    color: #ffffff;
+}
+
+.brand {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.topnav a {
+    color: #d6e9ff;
+    text-decoration: none;
+    margin-left: 14px;
+}
+
+.topnav a:hover {
+    color: #ffffff;
+}
+
+.page {
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 18px 30px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.summary-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 8px 24px rgba(24, 54, 86, 0.08);
+}
+
+.summary-card h2 {
+    margin: 0;
+    font-size: 14px;
+    color: #4b5f74;
+}
+
+.summary-card p {
+    margin: 8px 0 0;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.panel {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 8px 24px rgba(24, 54, 86, 0.08);
+}
+
+.panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.panel-head h1 {
+    margin: 0;
+    font-size: 20px;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    background: #1f6fb2;
+    color: #ffffff;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #155588;
+}
+
+.clients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.client-card {
+    border: 1px solid #d6e4f1;
+    border-radius: 10px;
+    padding: 12px;
+    background: #f9fcff;
+    cursor: pointer;
+}
+
+.client-card:hover {
+    border-color: #1f6fb2;
+    box-shadow: 0 6px 18px rgba(21, 85, 136, 0.12);
+}
+
+.client-title {
+    margin: 0;
+    font-weight: 700;
+}
+
+.client-meta {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #3f5368;
+}
+
+.status-pill {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-online {
+    background: #d8f1dd;
+    color: #1f6a2d;
+}
+
+.status-offline {
+    background: #f4d7d7;
+    color: #7c1f1f;
+}
+
+.empty-state {
+    margin-top: 16px;
+    color: #5f7388;
+}

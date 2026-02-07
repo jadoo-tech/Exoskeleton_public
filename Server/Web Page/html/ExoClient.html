@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client {{ client_id }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ExoClient.css') }}" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">Client {{ client_id }}</div>
+        <nav class="topnav">
+            <a href="/exoDashboard" target="_blank" rel="noopener">Dashboard</a>
+            <a href="/motionControls" target="_blank" rel="noopener">Motion Controls</a>
+        </nav>
+    </header>
+
+    <main class="page" data-client-id="{{ client_id }}">
+        <section class="left-col">
+            <article class="panel video-panel">
+                <h2>Live Video</h2>
+                <img id="clientVideo" src="/video_feed/{{ client_id }}" alt="Video stream for client {{ client_id }}" />
+                <p id="videoState" class="note">Video stream is loading...</p>
+            </article>
+
+            <article class="panel controls-panel">
+                <h2>Controls</h2>
+
+                <div class="control-row">
+                    <button id="startVideoBtn" type="button">Start Video</button>
+                </div>
+
+                <div class="control-row">
+                    <label for="stepInput">Step Size</label>
+                    <input id="stepInput" type="number" min="0" placeholder="e.g. 50" />
+                    <button id="sendStepBtn" type="button">Send Step</button>
+                </div>
+
+                <div class="control-row">
+                    <label for="displayIndexInput">Display Index</label>
+                    <input id="displayIndexInput" type="number" min="0" max="2" placeholder="0" />
+                    <label for="displayTextInput">Display Text</label>
+                    <input id="displayTextInput" type="text" placeholder="HELLO" />
+                    <button id="sendDisplayBtn" type="button">Send Display</button>
+                </div>
+
+                <p id="commandStatus" class="note">Ready.</p>
+            </article>
+        </section>
+
+        <section class="right-col">
+            <article class="panel history-panel">
+                <div class="panel-head">
+                    <h2>Command History</h2>
+                    <button id="refreshHistoryBtn" type="button">Refresh</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Command</th>
+                            <th>Ack</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody id="commandHistoryBody"></tbody>
+                </table>
+            </article>
+        </section>
+    </main>
+
+    <script>
+        window.EXO_CLIENT_ID = {{ client_id | tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='javascript/ExoClient.js') }}"></script>
+</body>
+</html>

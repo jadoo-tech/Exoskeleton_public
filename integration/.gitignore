@@ -1,0 +1,6 @@
+.tmp/
+state/
+macos/logs/
+macos/pids/
+**/__pycache__/
+*.pyc
