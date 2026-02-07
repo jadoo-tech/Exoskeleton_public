@@ -1,69 +1,106 @@
+import io
+import os
 import socket
 import struct
-import constants
 import sys
 import time
-from picamera2 import Picamera2
-import io
+
 from PIL import Image
 
+import constants
+
+try:
+    from picamera2 import Picamera2  # type: ignore[import-not-found]
+except Exception:
+    Picamera2 = None
+
+
+SIM_MODE = os.getenv("EXO_SIM_MODE", "0") == "1"
+
+
+def connect_with_retry(host, port):
+    while True:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            print(f"Connecting to server at {host}:{port} for video")
+            sock.connect((host, port))
+            print(f"Connected to {host}:{port} for video")
+            return sock
+        except OSError as err:
+            sock.close()
+            print(f"Video socket connect failed: {err}. Retrying in 1s")
+            time.sleep(1)
+
+
+def frame_from_camera(picam2):
+    stream = io.BytesIO()
+    array = picam2.capture_array()
+    img = Image.fromarray(array)
+    img.save(stream, format="JPEG", quality=70)
+    return stream.getvalue()
+
+
+def frame_from_simulation(frame_count):
+    stream = io.BytesIO()
+    color = (frame_count % 255, 80, 220)
+    img = Image.new("RGB", (640, 480), color=color)
+    img.save(stream, format="JPEG", quality=70)
+    return stream.getvalue()
+
+
 def send_video_stream(sock, cId):
-    print("video called")
-    # Initialize Picamera2
-    picam2 = Picamera2()
-    config = picam2.create_still_configuration(main={'size': (640, 480)}, buffer_count=1)
-    picam2.configure(config)
-    picam2.start()
-    time.sleep(2)  # Camera warm-up
+    print("Video stream loop started")
+    use_camera = Picamera2 is not None and not SIM_MODE
+    picam2 = None
+
+    if use_camera and Picamera2 is not None:
+        picam2 = Picamera2()
+        config = picam2.create_still_configuration(
+            main={"size": (640, 480)}, buffer_count=1
+        )
+        picam2.configure(config)
+        picam2.start()
+        time.sleep(2)
+    else:
+        use_camera = False
+        print("SIM_MODE or no picamera2 detected: sending synthetic frames")
 
     try:
         frame_count = 0
         while True:
-            # Capture frame as JPEG to memory buffer
-            stream = io.BytesIO()
-            array = picam2.capture_array()
-            # Encode as JPEG
-            img = Image.fromarray(array)
-            img.save(stream, format='JPEG', quality=70)
-            frame_data = stream.getvalue()
-            frame_size = len(frame_data)
+            if use_camera:
+                frame_data = frame_from_camera(picam2)
+            else:
+                frame_data = frame_from_simulation(frame_count)
 
-            try:
-                # Send frame size first (4 bytes, big-endian)
-                sock.send(struct.pack('>I', frame_size))
-                # Send frame data
-                sock.send(frame_data)
-                frame_count += 1
-                if frame_count % 30 == 0:
-                    print(f"Sent {frame_count} frames (Client: {cId})")
-            except Exception as e:
-                print(f"Error sending frame: {e}")
-                break
-            # Small delay to control frame rate
-            time.sleep(1/15)  # 15 FPS
+            sock.sendall(struct.pack(">I", len(frame_data)))
+            sock.sendall(frame_data)
+
+            frame_count += 1
+            if frame_count % 30 == 0:
+                print(f"Sent {frame_count} frames (Client: {cId})")
+
+            time.sleep(1 / 15)
     except KeyboardInterrupt:
         print("Video streaming stopped by user")
     except Exception as e:
         print(f"Error in video streaming: {e}")
     finally:
-        picam2.close()
+        if picam2 is not None:
+            picam2.close()
         print(f"Video streaming ended (Client: {cId})")
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python3 videoDisplay.py <client_id>")
-        cId = 'TestId'
+        cId = "TestId"
     else:
         cId = sys.argv[1]
-    
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    time.sleep(2)
+
+    time.sleep(1)
+    sock = connect_with_retry(constants.HOST, constants.PORT_VIDEO)
     try:
-        print(f"Connecting to server at {constants.HOST}:{constants.PORT_VIDEO} to display video")
-        sock.connect((constants.HOST, constants.PORT_VIDEO))
-        print(f"Connected to server for video streaming (Client: {cId})")
         send_video_stream(sock, cId)
-    except Exception as e:
-        print(f"Error connecting to server for video: {e}")
     finally:
-        sock.close() 
+        sock.close()

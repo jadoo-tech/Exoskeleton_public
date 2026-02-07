@@ -19,7 +19,13 @@ rpi = [
   "picamera2>=0.3.34; platform_system == 'Linux'",
 ]
 
+[dependency-groups]
+test = [
+  "pytest>=8.3,<9",
+]
+
 [tool.uv]
+package = false
 dependency-metadata = [
   { name = "python-prctl", version = "1.8.1", requires-dist = [] },
 ]
