@@ -8,7 +8,7 @@ import threading
 import time
 import uuid
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 import constants
 
@@ -27,6 +27,10 @@ class ClientAgent:
     def __init__(self):
         self.client_id = constants.CLIENT_ID
         self.sim_mode = constants.SIM_MODE
+        try:
+            self._overlay_font = ImageFont.load_default()
+        except Exception:
+            self._overlay_font = None
 
     def _log(self, message: str) -> None:
         ts = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -292,6 +296,33 @@ class ClientAgent:
         payload = io.BytesIO()
         color = (frame_count % 255, 100, 220)
         image = Image.new("RGB", (640, 480), color=color)
+
+        overlay_text = f"Client: {self.client_id}\nTime: {time.strftime('%H:%M:%S')}"
+        draw = ImageDraw.Draw(image)
+        x, y, pad = 10, 10, 4
+
+        try:
+            if self._overlay_font is not None:
+                bbox = draw.multiline_textbbox(
+                    (x, y), overlay_text, font=self._overlay_font
+                )
+            else:
+                bbox = draw.multiline_textbbox((x, y), overlay_text)
+            bg_box = (bbox[0] - pad, bbox[1] - pad, bbox[2] + pad, bbox[3] + pad)
+        except Exception:
+            bg_box = (x - pad, y - pad, x + 210, y + 34)
+
+        draw.rectangle(bg_box, fill=(0, 0, 0))
+        if self._overlay_font is not None:
+            draw.multiline_text(
+                (x, y),
+                overlay_text,
+                fill=(255, 255, 255),
+                font=self._overlay_font,
+            )
+        else:
+            draw.multiline_text((x, y), overlay_text, fill=(255, 255, 255))
+
         image.save(payload, format="JPEG", quality=70)
         return payload.getvalue()
 

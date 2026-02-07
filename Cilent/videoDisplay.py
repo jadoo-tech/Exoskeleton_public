@@ -1,3 +1,11 @@
+"""
+LEGACY COMMUNICATION SCRIPT.
+
+This file belongs to the pre-v2 client video path and is kept for
+fallback/archeology. Active runtime uses `Cilent/agent.py` when
+`EXO_COMM_STACK=v2`.
+"""
+
 import io
 import os
 import socket
@@ -5,7 +13,7 @@ import struct
 import sys
 import time
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 import constants
 
@@ -16,6 +24,10 @@ except Exception:
 
 
 SIM_MODE = os.getenv("EXO_SIM_MODE", "0") == "1"
+try:
+    OVERLAY_FONT = ImageFont.load_default()
+except Exception:
+    OVERLAY_FONT = None
 
 
 def connect_with_retry(host, port):
@@ -40,10 +52,32 @@ def frame_from_camera(picam2):
     return stream.getvalue()
 
 
-def frame_from_simulation(frame_count):
+def frame_from_simulation(frame_count, client_id):
     stream = io.BytesIO()
     color = (frame_count % 255, 80, 220)
     img = Image.new("RGB", (640, 480), color=color)
+
+    overlay_text = f"Client: {client_id}\nTime: {time.strftime('%H:%M:%S')}"
+    draw = ImageDraw.Draw(img)
+    x, y, pad = 10, 10, 4
+
+    try:
+        if OVERLAY_FONT is not None:
+            bbox = draw.multiline_textbbox((x, y), overlay_text, font=OVERLAY_FONT)
+        else:
+            bbox = draw.multiline_textbbox((x, y), overlay_text)
+        bg_box = (bbox[0] - pad, bbox[1] - pad, bbox[2] + pad, bbox[3] + pad)
+    except Exception:
+        bg_box = (x - pad, y - pad, x + 210, y + 34)
+
+    draw.rectangle(bg_box, fill=(0, 0, 0))
+    if OVERLAY_FONT is not None:
+        draw.multiline_text(
+            (x, y), overlay_text, fill=(255, 255, 255), font=OVERLAY_FONT
+        )
+    else:
+        draw.multiline_text((x, y), overlay_text, fill=(255, 255, 255))
+
     img.save(stream, format="JPEG", quality=70)
     return stream.getvalue()
 
@@ -71,7 +105,7 @@ def send_video_stream(sock, cId):
             if use_camera:
                 frame_data = frame_from_camera(picam2)
             else:
-                frame_data = frame_from_simulation(frame_count)
+                frame_data = frame_from_simulation(frame_count, cId)
 
             sock.sendall(struct.pack(">I", len(frame_data)))
             sock.sendall(frame_data)

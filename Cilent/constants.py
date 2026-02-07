@@ -37,6 +37,7 @@ FILE_NAME = "large"
 FILE_TYPE = "csv"
 SIM_MODE = os.getenv("EXO_SIM_MODE", "0") == "1"
 
+# Legacy (pre-v2) scripts kept for fallback/archeology.
 LEGACY_SCRIPTS = ["updateData.py", "execCommands.py", "videoDisplay.py"]
 if SIM_MODE:
     LEGACY_SCRIPTS = ["execCommands.py", "videoDisplay.py"]

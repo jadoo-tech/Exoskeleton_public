@@ -1,3 +1,11 @@
+"""
+LEGACY COMMUNICATION SCRIPT.
+
+This file belongs to the pre-v2 client command path and is kept for
+fallback/archeology. Active runtime uses `Cilent/agent.py` when
+`EXO_COMM_STACK=v2`.
+"""
+
 import os
 import socket
 import time
