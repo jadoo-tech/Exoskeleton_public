@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib
 import os
+import socket
 import sys
 from pathlib import Path
 
@@ -12,15 +13,12 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 BACKEND_DIR = REPO_ROOT / "Server" / "Web Page" / "backend"
 
 
-def _close_client_maps(app_module: object) -> None:
-    for mapping_name in ("clients_exec", "clients_video"):
-        mapping = getattr(app_module, mapping_name)
-        for conn, _addr in list(mapping.values()):
-            try:
-                conn.close()
-            except OSError:
-                pass
-        mapping.clear()
+def _free_tcp_port() -> int:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(("127.0.0.1", 0))
+    port = sock.getsockname()[1]
+    sock.close()
+    return port
 
 
 @pytest.fixture(scope="session")
@@ -29,7 +27,9 @@ def backend_module():
         sys.path.insert(0, str(BACKEND_DIR))
 
     constants = importlib.import_module("constants")
-    constants.HOST = "127.0.0.1"
+    setattr(constants, "HOST", "127.0.0.1")
+    setattr(constants, "PORTOUT", _free_tcp_port())
+    setattr(constants, "PORT_VIDEO", _free_tcp_port())
 
     original_cwd = os.getcwd()
     os.chdir(BACKEND_DIR)
@@ -37,26 +37,16 @@ def backend_module():
     app_module = importlib.import_module("app")
     yield app_module
 
-    _close_client_maps(app_module)
-    app_module.latest_frames.clear()
-
-    for sock_name in ("sock_exec", "sock_video"):
-        sock = getattr(app_module, sock_name)
-        try:
-            sock.close()
-        except OSError:
-            pass
-
+    app_module.connection_manager.stop()
     os.chdir(original_cwd)
 
 
 @pytest.fixture(autouse=True)
 def reset_backend_state(backend_module):
-    _close_client_maps(backend_module)
-    backend_module.latest_frames.clear()
+    backend_module.connection_manager.ensure_started()
+    backend_module.connection_manager.reset_for_tests()
     yield
-    _close_client_maps(backend_module)
-    backend_module.latest_frames.clear()
+    backend_module.connection_manager.reset_for_tests()
 
 
 @pytest.fixture

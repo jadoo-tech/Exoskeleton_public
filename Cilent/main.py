@@ -1,24 +1,32 @@
-import threading
+from __future__ import annotations
+
 import subprocess
+import sys
+import threading
 import time
 
 import constants
 
-threads = []
 
-def runTask(script):
-	subprocess.run(['python3', script])
-	
-if __name__ == '__main__':
-	for script in constants.SCRIPTS:
-		thread = threading.Thread(target = runTask, args = (script,))
-		thread.daemon = True  # Allows threads to exit when the main program exits
-		thread.start()
-		threads.append(thread)
+threads: list[threading.Thread] = []
 
-# Keep the main thread running indefinitely
-	try:
-		while True:
-			time.sleep(1)
-	except KeyboardInterrupt:
-		print("Main thread interrupted. Exiting...")
+
+def run_task(script: str) -> None:
+    subprocess.run([sys.executable, script], check=False)
+
+
+if __name__ == "__main__":
+    print(
+        f"Starting client stack mode={constants.COMM_STACK}, scripts={constants.SCRIPTS}"
+    )
+    for script in constants.SCRIPTS:
+        thread = threading.Thread(target=run_task, args=(script,))
+        thread.daemon = True
+        thread.start()
+        threads.append(thread)
+
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Main thread interrupted. Exiting...")

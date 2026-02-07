@@ -14,7 +14,7 @@ if [ -f "$PID_DIR/server.pid" ] && kill -0 "$(cat "$PID_DIR/server.pid")" >/dev/
 else
   (
     cd "$REPO_ROOT/Server/Web Page/backend"
-    nohup env EXO_HOST=127.0.0.1 uv run gunicorn -w 1 -b 127.0.0.1:${WEB_PORT} app:app > "$LOG_DIR/server.log" 2>&1 &
+    nohup env EXO_HOST=127.0.0.1 EXO_HTTP_HOST=127.0.0.1 EXO_HTTP_PORT=${WEB_PORT} uv run python app.py > "$LOG_DIR/server.log" 2>&1 &
     echo $! > "$PID_DIR/server.pid"
   )
   echo "Started server (pid $(cat "$PID_DIR/server.pid"))"
@@ -37,7 +37,7 @@ if [ -f "$PID_DIR/client.pid" ] && kill -0 "$(cat "$PID_DIR/client.pid")" >/dev/
 else
   (
     cd "$REPO_ROOT/Cilent"
-    nohup env EXO_HOST=127.0.0.1 EXO_SIM_MODE=1 uv run python main.py > "$LOG_DIR/client.log" 2>&1 &
+    nohup env EXO_HOST=127.0.0.1 EXO_SIM_MODE=1 EXO_COMM_STACK=v2 EXO_CLIENT_ID=local1 uv run python main.py > "$LOG_DIR/client.log" 2>&1 &
     echo $! > "$PID_DIR/client.pid"
   )
   echo "Started client in SIM_MODE (pid $(cat "$PID_DIR/client.pid"))"

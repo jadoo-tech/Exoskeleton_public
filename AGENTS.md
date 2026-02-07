@@ -345,3 +345,64 @@ Also needed operationally:
 - Multi-client operation is unfinished and likely to stall because `accept()` is blocking and there is no proper identity handshake.
 - `start_video` request path can result in duplicate command send attempts.
 - Data upload (`updateData.py` -> `recvFile.py`) is not integrated into the main Flask runtime thread.
+
+## 15) 2026-02 refactor update (current software status)
+
+The runtime communication path has started a major replacement aligned with `CLIENT_CONN_MIGRATION.md`:
+
+- New server connection manager lives in `Server/Web Page/backend/comm/manager.py`.
+- New Flask backend path in `Server/Web Page/backend/app.py` now uses session-based client registration.
+- New client agent lives in `Cilent/agent.py` and is launched by `Cilent/main.py` when `EXO_COMM_STACK=v2` (default in `Cilent/constants.py`).
+- Legacy scripts (`execCommands.py`, `videoDisplay.py`) are still present for fallback and archaeology.
+
+What changed versus the legacy path:
+
+- Server no longer pairs clients by sequential blocking `accept()` calls tied to UI-provided client IDs.
+- Client now explicitly registers over control channel (`hello`/`hello_ack`) and gets a server-issued `session_id`.
+- Video channel now requires `video_hello` with matching `client_id` + `session_id` before frames are accepted.
+- Server tracks heartbeat and drops stale sessions.
+- Command lifecycle now supports acknowledgement and result tracking.
+
+## 16) New server endpoints and observability
+
+In addition to legacy UI routes, backend now exposes:
+
+- `GET /health`
+  - Basic service health and comm manager running state.
+- `GET /clients`
+  - Active client/session list and whether video is connected.
+- `GET /commandStatus/<msg_id>`
+  - Per-command lifecycle state (`ack`, `result`, timestamps).
+
+`POST /commandClient` remains the primary UI command endpoint and now returns a `msg_id` for tracking.
+
+## 17) Practical bring-up (v2 comm stack)
+
+Server:
+
+1. Set env vars as needed (`EXO_HOST`, `EXO_HTTP_HOST`, `EXO_HTTP_PORT`).
+2. Run from `Server/Web Page/backend/`:
+   - `uv run python app.py`
+
+Client:
+
+1. Set env vars (`EXO_HOST`, `EXO_CLIENT_ID`, optional `EXO_SIM_MODE=1`).
+2. Run from `Cilent/`:
+   - `uv run python main.py`
+
+For local macOS emulation without hardware:
+
+- Start stack: `integration/macos/start_local_stack.sh`
+- Stop stack: `integration/macos/stop_local_stack.sh`
+- UI: `http://127.0.0.1:5050/motionControls`
+
+## 18) Current test status (as of this update)
+
+- `integration/macos/tests` pass against the new v2 protocol path.
+- Playwright smoke test against `motionControls` passes for:
+  - `start_video`
+  - `step`
+  - `display`
+  - MJPEG render from `/video_feed/<client_id>`
+- `integration/dockerpi/` remains work-in-progress:
+  - Not reliable yet on this machine due VM boot/SSH readiness instability.
