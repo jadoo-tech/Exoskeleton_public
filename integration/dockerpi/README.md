@@ -2,6 +2,12 @@
 
 This setup spins up two Raspberry Pi VMs (inside Docker) so we can test server/client separation in a Pi-like environment.
 
+## Current status
+
+- dockerpi end-to-end tests are not working yet on this machine.
+- Current blocker: VM boot reaches inconsistent state and SSH login is timing out, so payload push/start scripts cannot complete reliably.
+- Treat this harness as work-in-progress until this is resolved.
+
 It uses:
 
 - Upstream image: `lukechilds/dockerpi`
