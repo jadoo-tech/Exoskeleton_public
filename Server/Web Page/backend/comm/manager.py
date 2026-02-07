@@ -196,6 +196,22 @@ class ConnectionManager:
                 return None
             return event.snapshot()
 
+    def list_command_events(
+        self,
+        client_id: str | None = None,
+        limit: int = 100,
+    ) -> list[dict[str, Any]]:
+        safe_limit = max(1, min(limit, 500))
+        with self._state_lock:
+            events = []
+            for event in self._command_events.values():
+                if client_id is not None and event.client_id != client_id:
+                    continue
+                events.append(event.snapshot())
+
+        events.sort(key=lambda item: item["sent_at"], reverse=True)
+        return events[:safe_limit]
+
     def _accept_control_loop(self) -> None:
         while not self._stop_event.is_set():
             listener = self._control_listener

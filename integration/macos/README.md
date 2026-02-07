@@ -21,8 +21,14 @@ Open:
 
 - `http://127.0.0.1:5050`
 - `http://127.0.0.1:5050/motionControls`
+- `http://127.0.0.1:5050/exoDashboard`
 
-Use client id `local1`, click **Start Video**, then send step/display commands.
+The start script now launches two simulated clients: `local1` and `local2`.
+
+Use either:
+
+- Motion Controls with client id `local1` or `local2`
+- Exo Dashboard and click a client card to open the per-client tab
 
 Stop the stack:
 

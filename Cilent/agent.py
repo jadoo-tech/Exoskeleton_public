@@ -28,15 +28,17 @@ class ClientAgent:
         self.client_id = constants.CLIENT_ID
         self.sim_mode = constants.SIM_MODE
 
+    def _log(self, message: str) -> None:
+        ts = time.strftime("%Y-%m-%d %H:%M:%S")
+        print(f"[{ts}] [{self.client_id}] {message}")
+
     def run_forever(self) -> None:
-        print(
-            f"Starting client agent client_id={self.client_id}, sim_mode={self.sim_mode}"
-        )
+        self._log(f"Starting client agent sim_mode={self.sim_mode}")
         while True:
             try:
                 self._run_session()
             except Exception as err:
-                print(f"Agent session ended: {err}")
+                self._log(f"Agent session ended: {err}")
             time.sleep(constants.CONNECT_RETRY_S)
 
     def _run_session(self) -> None:
@@ -66,7 +68,7 @@ class ClientAgent:
         if not session_id:
             raise RuntimeError("Server hello_ack missing session_id")
 
-        print(f"Connected to server with session_id={session_id}")
+        self._log(f"Connected to server with session_id={session_id}")
 
         session_stop = threading.Event()
         video_thread = threading.Thread(
@@ -113,6 +115,7 @@ class ClientAgent:
 
             msg_id = str(msg.get("msg_id", "")).strip()
             command = str(msg.get("payload", {}).get("command", "")).strip()
+            self._log(f"Received command msg_id={msg_id} command='{command}'")
 
             accepted = bool(command and msg_id)
             ack = {
@@ -127,6 +130,7 @@ class ClientAgent:
                 },
             }
             self._send_json_line(control_sock, ack)
+            self._log(f"Sent command_ack msg_id={ack['msg_id']} accepted={accepted}")
 
             if not accepted:
                 continue
@@ -145,6 +149,9 @@ class ClientAgent:
                 },
             }
             self._send_json_line(control_sock, result)
+            self._log(
+                f"Sent command_result msg_id={msg_id} status={status} detail='{detail}'"
+            )
 
     def _execute_command(self, command: str) -> tuple[str, str]:
         try:
@@ -171,9 +178,9 @@ class ClientAgent:
             return ("error", str(err))
 
     def _turn_motor(self, step_size: int) -> None:
-        print(f"turnMotor step_size={step_size}")
+        self._log(f"turnMotor step_size={step_size}")
         if self.sim_mode:
-            print("SIM_MODE: skipping motor serial write")
+            self._log("SIM_MODE: skipping motor serial write")
             return
         if serial is None:
             raise RuntimeError("pyserial is not installed")
@@ -183,9 +190,9 @@ class ClientAgent:
             ser.write((f"step {step_size}\r").encode("utf-8"))
 
     def _display_text(self, index: int, message: str) -> None:
-        print(f"display index={index} message={message}")
+        self._log(f"display index={index} message={message}")
         if self.sim_mode:
-            print("SIM_MODE: skipping OLED serial write")
+            self._log("SIM_MODE: skipping OLED serial write")
             return
         if serial is None:
             raise RuntimeError("pyserial is not installed")
@@ -246,7 +253,7 @@ class ClientAgent:
             time.sleep(2)
         else:
             use_camera = False
-            print("SIM_MODE or no picamera2 detected: sending synthetic frames")
+            self._log("SIM_MODE or no picamera2 detected: sending synthetic frames")
 
         frame_count = 0
         try:
@@ -261,7 +268,7 @@ class ClientAgent:
 
                 frame_count += 1
                 if frame_count % 30 == 0:
-                    print(f"Sent {frame_count} frames")
+                    self._log(f"Sent {frame_count} frames")
 
                 session_stop.wait(1 / constants.VIDEO_FPS)
         except OSError:
@@ -292,13 +299,13 @@ class ClientAgent:
         while True:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             try:
-                print(f"Connecting {label} socket to {host}:{port}")
+                self._log(f"Connecting {label} socket to {host}:{port}")
                 sock.connect((host, port))
-                print(f"Connected {label} socket to {host}:{port}")
+                self._log(f"Connected {label} socket to {host}:{port}")
                 return sock
             except OSError as err:
                 sock.close()
-                print(
+                self._log(
                     f"{label} connect failed: {err}. Retrying in {constants.CONNECT_RETRY_S}s"
                 )
                 time.sleep(constants.CONNECT_RETRY_S)

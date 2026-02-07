@@ -106,6 +106,14 @@ def command_status(msg_id: str):
     return jsonify(event)
 
 
+@app.route("/commandHistory/<client_id>")
+def command_history(client_id: str):
+    ensure_comm_ready()
+    limit = request.args.get("limit", default=100, type=int)
+    events = connection_manager.list_command_events(client_id=client_id, limit=limit)
+    return jsonify(events)
+
+
 @app.route("/fetchData")
 def get_data():
     return jsonify(read_csv())
@@ -124,6 +132,16 @@ def open_data_page():
 @app.route("/motionControls")
 def open_controls_page():
     return render_template("MotionControl.html")
+
+
+@app.route("/exoDashboard")
+def open_dashboard_page():
+    return render_template("ExoDashboard.html")
+
+
+@app.route("/exoDashboard/client/<client_id>")
+def open_client_dashboard_page(client_id: str):
+    return render_template("ExoClient.html", client_id=client_id)
 
 
 @app.route("/")

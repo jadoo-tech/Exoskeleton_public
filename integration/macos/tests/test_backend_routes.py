@@ -2,7 +2,14 @@ from __future__ import annotations
 
 
 def test_basic_routes(backend_client):
-    for route in ("/", "/motionControls", "/dataDisplay", "/fetchData"):
+    for route in (
+        "/",
+        "/motionControls",
+        "/dataDisplay",
+        "/fetchData",
+        "/exoDashboard",
+        "/exoDashboard/client/test-client",
+    ):
         response = backend_client.get(route)
         assert response.status_code == 200
 

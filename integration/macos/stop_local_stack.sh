@@ -3,6 +3,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PID_DIR="$SCRIPT_DIR/pids"
+CLIENT_IDS=("local1" "local2")
 
 stop_pid_file() {
   local name="$1"
@@ -36,5 +37,10 @@ stop_pid_file() {
   rm -f "$file"
 }
 
+for client_id in "${CLIENT_IDS[@]}"; do
+  stop_pid_file "client ${client_id}" "$PID_DIR/client-${client_id}.pid"
+done
+
+# Backward compatibility with old single-client pid file name
 stop_pid_file "client" "$PID_DIR/client.pid"
 stop_pid_file "server" "$PID_DIR/server.pid"

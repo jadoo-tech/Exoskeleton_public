@@ -7,6 +7,19 @@ body {
     padding: 20px;
 }
 
+.page-links {
+    margin-bottom: 10px;
+}
+
+.page-links a {
+    color: #0f3b66;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-right: 8px;
+}
+
 .container {
     display: flex;
     flex-wrap: wrap;
